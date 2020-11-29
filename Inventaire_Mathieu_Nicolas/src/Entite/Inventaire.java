@@ -1,9 +1,11 @@
 package Entite;
 
+import java.util.Date;
+
 public class Inventaire {
 	
 	private int numero_inventaire;
-	private String date;
+	private Date date;
 	private String article;
 	private int numeroLot;
 	private int numeroSerie;
@@ -11,7 +13,7 @@ public class Inventaire {
 	private String emplacement;
 	private int quantite;
 	
-	public Inventaire(int numero_inventaire, String date,String article,int numeroLot,int numeroSerie,String lieuStockage,String emplacement,int quantite) {
+	public Inventaire(int numero_inventaire, Date date,String article,int numeroLot,int numeroSerie,String lieuStockage,String emplacement,int quantite) {
 		
 		super();
 		this.numero_inventaire = numero_inventaire;
@@ -33,11 +35,11 @@ public class Inventaire {
 		this.numero_inventaire = numero_inventaire;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

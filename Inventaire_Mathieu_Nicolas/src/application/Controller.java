@@ -1,5 +1,6 @@
 package application;
 import java.io.IOException;
+import java.util.Date;
 
 import Model.Model;
 import javafx.event.ActionEvent;
@@ -35,18 +36,17 @@ public class Controller {
 
 	@FXML
 	private Button btnAnnuler;
-	
-	private String date;
 
 	Model model = new Model();
 
 	public void valider(ActionEvent e) {
 		
 		try {
-			
-			//Etape 1 conversion
+			//Date
+			Date date = new Date();
+			//Conversion
 			model.conversion(txtIventaire.getText(), date, txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(), txtLieu_stockage.getText(), txtEmplacement.getText(), txtQuantite.getText());
-			System.out.println(model.getInventaire().getArticle());
+			System.out.println(model.getInventaire().getDate());
 			
 		} catch (IOException e1) {
 			
