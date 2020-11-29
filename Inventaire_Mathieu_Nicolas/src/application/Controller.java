@@ -8,31 +8,31 @@ import javafx.scene.control.TextField;
 public class Controller {
 
 	@FXML
-	private TextField iventaire;
+	private TextField txtIventaire;
 
 	@FXML
-	private TextField article;
+	private TextField txtArticle;
 
 	@FXML
-	private TextField numero_lot;
+	private TextField txtNumero_lot;
 
 	@FXML
-	private TextField numero_serie;
+	private TextField txtNumero_serie;
 
 	@FXML
-	private TextField lieu_stockage;
+	private TextField txtLieu_stockage;
 
 	@FXML
-	private TextField emplacement;
+	private TextField txtEmplacement;
 
 	@FXML
-	private TextField quantite;
+	private TextField txtQuantite;
 
 	@FXML
-	private Button valider;
+	private Button btnValider;
 
 	@FXML
-	private Button annuler;
+	private Button btnAnnuler;
 
 
 	public void valider(ActionEvent e) {
