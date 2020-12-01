@@ -90,6 +90,13 @@ public class Inventaire {
 	public void setQuantite(int quantite) {
 		this.quantite = quantite;
 	}
+
+	@Override
+	public String toString() {
+		return "Inventaire [numero_inventaire=" + numero_inventaire + ", date=" + date + ", article=" + article
+				+ ", numeroLot=" + numeroLot + ", numeroSerie=" + numeroSerie + ", lieuStockage=" + lieuStockage
+				+ ", emplacement=" + emplacement + ", quantite=" + quantite + "]";
+	}
 	
 	
 	
