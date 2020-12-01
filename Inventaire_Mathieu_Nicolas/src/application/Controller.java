@@ -53,13 +53,13 @@ public class Controller {
 			Date date = new Date();
 			
 			//Conversion
-			model.conversion(txtIventaire.getText(), date, txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(), txtLieu_stockage.getText(), txtEmplacement.getText(), txtQuantite.getText());
+			model.traitementData(txtIventaire.getText(), date, txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(), txtLieu_stockage.getText(), txtEmplacement.getText(), txtQuantite.getText());
 			
 			System.out.println(model.getInventaire().getDate());
 
 		}catch(IOException e1) {
 			
-			txtRetour.setText("Cara");
+			txtRetour.setText(e1.getMessage());
 			
 		}catch (NumberFormatException e2) {
 
