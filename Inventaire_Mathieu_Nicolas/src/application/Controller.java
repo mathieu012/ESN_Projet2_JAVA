@@ -16,7 +16,7 @@ import javafx.scene.control.TextField;
 public class Controller implements csvService{
 
 	@FXML
-	private TextField txtIventaire;
+	private TextField txtInventaire;
 
 	@FXML
 	private TextField txtArticle;
@@ -54,7 +54,7 @@ public class Controller implements csvService{
 		int quantite;
 		
 		try {
-			exception.controleChamp(txtIventaire.getText());
+			exception.controleChamp(txtInventaire.getText());
 		    } catch (NumberFormatException e1) {
 		     lblRetour.setText("La champ inventaire est vide");
 		     return;
@@ -83,7 +83,7 @@ public class Controller implements csvService{
 
 		
 		try {
-			inventaire = exception.checkNumercic(txtIventaire.getText());
+			inventaire = exception.checkNumercic(txtInventaire.getText());
 		    } catch (NumberFormatException e1) {
 		     lblRetour.setText("La champ inventaire n'est pas au bon format");
 		     return;
@@ -101,22 +101,31 @@ public class Controller implements csvService{
 			//Conversion
 			Inventaire inventaireObj = model.getInventaire();
 			
-			csvService.createCsvFile(txtIventaire.getText());
+			csvService.createCsvFile(txtInventaire.getText());
 			
 			
 			//String line = txtArticle.getText() + ";" + txtNumero_lot.getText() + ";" + txtNumero_serie.getText() + ";" + txtLieu_stockage.getText() + ";" + txtEmplacement.getText() + ";" + txtQuantite.getText();
 			
 			
-			csvService.writeToCsvFile(inventaireObj, txtIventaire.getText());
+			csvService.writeToCsvFile(inventaireObj, txtInventaire.getText());
 			
 			System.out.println(model.getInventaire().getDate());
+			
 	}
 			
 			
 
 
 	public void annuler(ActionEvent e) {
-
+		
+		txtInventaire.setText("");
+		txtArticle.setText("");
+		txtNumero_lot.setText("");
+		txtNumero_serie.setText("");
+		txtLieu_stockage.setText("");
+		txtEmplacement.setText("");
+		txtQuantite.setText("");
+		
 	}
 	
 
