@@ -8,6 +8,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="421.0" prefWidth="272.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <Label layoutX="103.0" layoutY="26.0" text="INVENTAIRE" />
+
       <TextField fx:id="txtIventaire" layoutX="62.0" layoutY="44.0" onInputMethodTextChanged="#test" />
       <Label layoutX="109.0" layoutY="70.0" text="ARTICLE" />
       <TextField fx:id="txtArticle" layoutX="62.0" layoutY="88.0" />
@@ -22,7 +23,7 @@
       <Label layoutX="102.0" layoutY="291.0" text="QUANTITE" />
       <TextField fx:id="txtQuantite" layoutX="62.0" layoutY="309.0" />
       <Button fx:id="btnValider" layoutX="37.0" layoutY="375.0" mnemonicParsing="false" onAction="#valider" prefHeight="26.0" prefWidth="95.0" text="Validez" />
-      <Button fx:id="btnAnnuler" layoutX="163.0" layoutY="375.0" mnemonicParsing="false" onAction="#valider" prefHeight="26.0" prefWidth="95.0" text="Annuler" />
+      <Button fx:id="btnAnnuler" layoutX="163.0" layoutY="375.0" mnemonicParsing="false" onAction="#annuler" prefHeight="26.0" prefWidth="95.0" text="Annuler" />
       <Label fx:id="lblRetour" layoutX="23.0" layoutY="346.0" prefHeight="17.0" prefWidth="223.0" />
    </children>
 </AnchorPane>
