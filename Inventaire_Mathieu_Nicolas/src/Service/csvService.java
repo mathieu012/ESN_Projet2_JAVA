@@ -20,11 +20,9 @@ public interface csvService {
 	public static final String fileName ="";
 	
 	public static void writeToCsvFile(Inventaire inventaire, String fileName) throws FileAlreadyExistsException {
-		if (csvService.fileExist(fileName) != true) {
+		if (csvService.fileExist(fileName) == false) {
 			csvService.createCsvFile(fileName);
 		}
-		
-		
 		
 		try (FileWriter writer = new FileWriter(path + fileName + fileType)){
 			
@@ -36,13 +34,14 @@ public interface csvService {
 	        e.printStackTrace();
 	    }
 	}
+
 	
-	public static List<String[]> readFromCsvFile(String separator, String fileName){
+	public static List<String[]> readFromCsvFile(String fileName){
 	    try (BufferedReader reader = new BufferedReader(new FileReader(path + fileName + fileType))){
 	        List<String[]> list = new ArrayList<>();
 	        String line = "";
 	        while((line = reader.readLine()) != null){
-	            String[] array = line.split(separator);
+	            String[] array = line.split(csvService.separator);
 	            list.add(array);
 	        }
 	        return list;
@@ -60,7 +59,8 @@ public interface csvService {
 	          return true;
 	      }else{
 	    	  System.out.println("File not found!");
-	    	  throw new FileAlreadyExistsException("l'inventaire N° " + fileName + " n'a pas été trouve");     
+	    	  return false;
+	    	  //throw new FileAlreadyExistsException("l'inventaire N° " + fileName + " n'a pas été trouve");
 	      }
 	      
 	      
@@ -72,7 +72,7 @@ public interface csvService {
 	      try {
 			if (fichier.createNewFile()) {
 			    System.out.println("Le fichier a été créé");
-				throw new FileSystemException("L'inventaire N° " + fileName + " n'a pas été creer");
+				throw new FileSystemException("L'inventaire N° " + fileName + " a été creer");
 			}else{
 			    System.out.println("Erreur, Impossible de créer ce fichier");
 			    throw new FileSystemException("Le fichier N° " + fileName + "ne peut pas créer le fichier");

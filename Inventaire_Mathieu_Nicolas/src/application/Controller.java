@@ -1,7 +1,7 @@
 package application;
 import java.io.IOException;
 import java.util.Date;
-
+import java.util.List;
 
 import Entite.Inventaire;
 import Model.GestionException;
@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 
 public class Controller implements csvService{
 
@@ -47,7 +48,7 @@ public class Controller implements csvService{
 	
 	GestionException exception = new GestionException();
 	Model model = new Model();
-
+	
 	public void valider(ActionEvent e) throws IOException {
 		
 		int inventaire;
@@ -101,13 +102,13 @@ public class Controller implements csvService{
 			//Conversion
 			Inventaire inventaireObj = model.getInventaire();
 			
-			csvService.createCsvFile(txtIventaire.getText());
-			
-			
 			//String line = txtArticle.getText() + ";" + txtNumero_lot.getText() + ";" + txtNumero_serie.getText() + ";" + txtLieu_stockage.getText() + ";" + txtEmplacement.getText() + ";" + txtQuantite.getText();
 			
 			
-			csvService.writeToCsvFile(inventaireObj, txtIventaire.getText());
+			//csvService.writeToCsvFile(inventaireObj, txtIventaire.getText());
+			
+			
+			List<String[]>lecture  = csvService.readFromCsvFile(inventaireObj.getNumero_inventaire());
 			
 			System.out.println(model.getInventaire().getDate());
 	}
