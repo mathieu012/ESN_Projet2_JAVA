@@ -7,13 +7,13 @@ public class Inventaire {
 	private int numero_inventaire;
 	private Date date;
 	private String article;
-	private int numeroLot;
-	private int numeroSerie;
+	private String numeroLot;
+	private String numeroSerie;
 	private String lieuStockage;
 	private String emplacement;
 	private int quantite;
 	
-	public Inventaire(int numero_inventaire, Date date,String article,int numeroLot,int numeroSerie,String lieuStockage,String emplacement,int quantite) {
+	public Inventaire(int numero_inventaire, Date date,String article,String numeroLot,String numeroSerie,String lieuStockage,String emplacement,int quantite) {
 		
 		super();
 		this.numero_inventaire = numero_inventaire;
@@ -51,19 +51,19 @@ public class Inventaire {
 		this.article = article;
 	}
 
-	public int getNumeroLot() {
+	public String getNumeroLot() {
 		return numeroLot;
 	}
 
-	public void setNumeroLot(int numeroLot) {
+	public void setNumeroLot(String numeroLot) {
 		this.numeroLot = numeroLot;
 	}
 
-	public int getNumeroSerie() {
+	public String getNumeroSerie() {
 		return numeroSerie;
 	}
 
-	public void setNumeroSerie(int numeroSerie) {
+	public void setNumeroSerie(String numeroSerie) {
 		this.numeroSerie = numeroSerie;
 	}
 

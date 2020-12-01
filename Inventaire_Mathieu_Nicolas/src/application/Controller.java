@@ -2,6 +2,7 @@ package application;
 import java.io.IOException;
 import java.util.Date;
 
+import Model.GestionException;
 import Model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,7 +34,7 @@ public class Controller {
 	private TextField txtQuantite;
 	
 	@FXML
-	private Label txtRetour;
+	private Label lblRetour;
 
 	@FXML
 	private Button btnValider;
@@ -41,39 +42,77 @@ public class Controller {
 	@FXML
 	private Button btnAnnuler;
 	
-	
-
+	GestionException exception = new GestionException();
 	Model model = new Model();
 
-	public void valider(ActionEvent e) {
-
+	public void valider(ActionEvent e) throws IOException {
+		
+		int inventaire;
+		int quantite;
+		
 		try {
+			exception.controleChamp(txtIventaire.getText());
+		    } catch (NumberFormatException e1) {
+		     lblRetour.setText("La champ inventaire est vide");
+		     return;
+		    }
+		
+		try {
+			exception.controleChamp(txtArticle.getText());
+		    } catch (NumberFormatException e1) {
+		     lblRetour.setText("La champ article est vide");
+		     return;
+		    }
+		
+		try {
+			exception.controleChamp(txtLieu_stockage.getText());
+		    } catch (NumberFormatException e1) {
+		     lblRetour.setText("La champ lieu de stockage est vide");
+		     return;
+		    }
+		
+		try {
+			exception.controleChamp(txtQuantite.getText());
+		    } catch (NumberFormatException e1) {
+		     lblRetour.setText("La champ quantite est vide");
+		     return;
+		    }	
 
-			//Date
-			Date date = new Date();
-			
-			//Conversion
-			model.traitementData(txtIventaire.getText(), date, txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(), txtLieu_stockage.getText(), txtEmplacement.getText(), txtQuantite.getText());
-			
-			System.out.println(model.getInventaire().getDate());
-
-		}catch(IOException e1) {
-			
-			txtRetour.setText(e1.getMessage());
-			
-		}catch (NumberFormatException e2) {
-
-			txtRetour.setText("Vous n'avez renseigner aucun champ !");
-
-		}
-
-		//Etape 2 appel de l'objet
-
-		//Etape 3 Stockage
+		
+		try {
+			inventaire = exception.checkNumercic(txtIventaire.getText());
+		    } catch (NumberFormatException e1) {
+		     lblRetour.setText("La champ inventaire n'est pas au bon format");
+		     return;
+		    }
+		
+		try {
+			quantite = exception.checkNumercic(txtQuantite.getText());
+		    } catch (NumberFormatException e1) {
+		     lblRetour.setText("La champ quantite n'est pas au bon format");
+		     return;
+		    }
+		
+			model.traitementData(inventaire, txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(), txtLieu_stockage.getText(), txtEmplacement.getText(), quantite);
 	}
 
 
 	public void annuler(ActionEvent e) {
 
 	}
+	
+
+		
+			
+	
+		
+		
+		
+	
+	
 }
+
+
+
+
+
