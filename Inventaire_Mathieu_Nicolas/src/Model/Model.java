@@ -7,9 +7,9 @@ import Entite.Inventaire;
 
 public class Model {
 
-	Inventaire inventaire;
+Inventaire inventaire;
 
-	public void traitementData(int numero_inventaire,String article,String numeroLot,String numeroSerie,String lieuStockage,String emplacement,int quantite) throws IOException {
+public void traitementData(int numero_inventaire,String article,String numeroLot,String numeroSerie,String lieuStockage,String emplacement,int quantite) throws IOException {
 	
 		Date date = new Date();
 		
