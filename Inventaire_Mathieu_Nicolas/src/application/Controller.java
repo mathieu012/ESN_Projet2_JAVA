@@ -35,7 +35,7 @@ public class Controller implements csvService{
 
 	@FXML
 	private TextField txtQuantite;
-	
+
 	@FXML
 	private Label lblRetour;
 
@@ -44,80 +44,96 @@ public class Controller implements csvService{
 
 	@FXML
 	private Button btnAnnuler;
-	
+
 	GestionException exception = new GestionException();
 	Model model = new Model();
 
-	public void valider(ActionEvent e) throws IOException {
+	public void valider(ActionEvent e){
+
+		try {
+
+			this.checkForm();
+
+			this.checkInteger();
+
+			Inventaire inventaireObj = model.traitementData(Integer.parseInt(txtInventaire.getText()), txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(), txtLieu_stockage.getText(), txtEmplacement.getText(), Integer.parseInt(txtQuantite.getText()));
+
+			csvService.createCsvFile(txtInventaire.getText());
+
+			csvService.writeToCsvFile(inventaireObj, txtInventaire.getText());
+
+		}catch(IOException e1){
+			
+			System.out.println(e1.getMessage());
+			
+		}catch(Exception e1) {
+			
+			this.lblRetour.setText(e1.getMessage());
+			
+		}
+
+	}
+
+
+	private void checkInteger() throws Exception{
+
+		try {
+
+			exception.checkNumercic(txtInventaire.getText());
+
+		} catch (NumberFormatException e1) {
+
+			throw new Exception ("Le champ inventaire n'est pas au bon format");
+			
+		}
+
+		try {
+			
+			exception.checkNumercic(txtQuantite.getText());
+			
+		} catch (NumberFormatException e1) {
+
+			throw new Exception ("Le champ quantite n'est pas au bon format");
 		
-		int inventaire;
-		int quantite;
-		
+		}
+	}
+
+
+	private void checkForm() throws Exception{
+
 		try {
 			exception.controleChamp(txtInventaire.getText());
-		    } catch (NumberFormatException e1) {
-		     lblRetour.setText("La champ inventaire est vide");
-		     return;
-		    }
-		
+		} catch (NumberFormatException e1) {
+			throw new Exception ("Le champ inventaire est vide");
+
+		}
+
 		try {
 			exception.controleChamp(txtArticle.getText());
-		    } catch (NumberFormatException e1) {
-		     lblRetour.setText("La champ article est vide");
-		     return;
-		    }
-		
+		} catch (NumberFormatException e1) {
+			throw new Exception ("Le champ article est vide");
+
+		}
+
 		try {
 			exception.controleChamp(txtLieu_stockage.getText());
-		    } catch (NumberFormatException e1) {
-		     lblRetour.setText("La champ lieu de stockage est vide");
-		     return;
-		    }
-		
+		} catch (NumberFormatException e1) {
+			throw new Exception ("Le champ lieu de stockage est vide");
+
+		}
+
 		try {
 			exception.controleChamp(txtQuantite.getText());
-		    } catch (NumberFormatException e1) {
-		     lblRetour.setText("La champ quantite est vide");
-		     return;
-		    }	
+		} catch (NumberFormatException e1) {
+			throw new Exception ("Le champ quantite est vide");
 
-		
-		try {
-			inventaire = exception.checkNumercic(txtInventaire.getText());
-		    } catch (NumberFormatException e1) {
-		     lblRetour.setText("La champ inventaire n'est pas au bon format");
-		     return;
-		    }
-		
-		try {
-			quantite = exception.checkNumercic(txtQuantite.getText());
-		    } catch (NumberFormatException e1) {
-		     lblRetour.setText("La champ quantite n'est pas au bon format");
-		     return;
-		    }
-		
-			model.traitementData(inventaire, txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(), txtLieu_stockage.getText(), txtEmplacement.getText(), quantite);
-			
-			//Conversion
-			Inventaire inventaireObj = model.getInventaire();
-			
-			csvService.createCsvFile(txtInventaire.getText());
-			
-			
-			//String line = txtArticle.getText() + ";" + txtNumero_lot.getText() + ";" + txtNumero_serie.getText() + ";" + txtLieu_stockage.getText() + ";" + txtEmplacement.getText() + ";" + txtQuantite.getText();
-			
-			
-			csvService.writeToCsvFile(inventaireObj, txtInventaire.getText());
-			
-			System.out.println(model.getInventaire().getDate());
-			
+		}
+
 	}
-			
-			
 
 
 	public void annuler(ActionEvent e) {
-		
+
 		txtInventaire.setText("");
 		txtArticle.setText("");
 		txtNumero_lot.setText("");
@@ -125,18 +141,18 @@ public class Controller implements csvService{
 		txtLieu_stockage.setText("");
 		txtEmplacement.setText("");
 		txtQuantite.setText("");
-		
-	}
-	
 
-		
-			
-	
-		
-		
-		
-	
-	
+	}
+
+
+
+
+
+
+
+
+
+
 }
 
 

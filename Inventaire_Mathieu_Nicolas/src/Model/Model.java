@@ -7,21 +7,14 @@ import Entite.Inventaire;
 
 public class Model {
 
-Inventaire inventaire;
+	public Inventaire traitementData(int numero_inventaire,String article,String numeroLot,String numeroSerie,String lieuStockage,String emplacement,int quantite) throws IOException {
 
-public void traitementData(int numero_inventaire,String article,String numeroLot,String numeroSerie,String lieuStockage,String emplacement,int quantite) throws IOException {
-	
 		Date date = new Date();
-		
-		inventaire = new Inventaire(numero_inventaire,date,article,numeroLot,numeroSerie,lieuStockage,emplacement,quantite);
-	}
 
-	public Inventaire getInventaire() {
+		Inventaire inventaire = new Inventaire(numero_inventaire,date,article,numeroLot,numeroSerie,lieuStockage,emplacement,quantite);
+
 		return inventaire;
 	}
 
-	public void setInventaire(Inventaire inventaire) {
-		this.inventaire = inventaire;
-	}
-	
+
 }
