@@ -7,17 +7,13 @@ import Entite.Inventaire;
 
 public class Model {
 
-	Inventaire inventaire;
+Inventaire inventaire;
 
-	public Inventaire conversion(String numero_inventaire,Date date,String article,String numeroLot,String numeroSerie,String lieuStockage,String emplacement,String quantite) throws IOException {
-		int numero_inventaireInt = Integer.valueOf(numero_inventaire);
-		int numeroLotInt = Integer.valueOf(numeroLot);
-		int numeroSerieInt = Integer.valueOf(numeroSerie);
-		int quantiteInt = Integer.valueOf(quantite);
-
-		inventaire = new Inventaire(numero_inventaireInt,date,article,numeroLotInt,numeroSerieInt,lieuStockage,emplacement,quantiteInt);
+public void traitementData(int numero_inventaire,String article,String numeroLot,String numeroSerie,String lieuStockage,String emplacement,int quantite) throws IOException {
+	
+		Date date = new Date();
 		
-		return inventaire;
+		inventaire = new Inventaire(numero_inventaire,date,article,numeroLot,numeroSerie,lieuStockage,emplacement,quantite);
 	}
 
 	public Inventaire getInventaire() {

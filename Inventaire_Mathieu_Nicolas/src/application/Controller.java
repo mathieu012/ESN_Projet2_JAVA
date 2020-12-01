@@ -2,7 +2,9 @@ package application;
 import java.io.IOException;
 import java.util.Date;
 
+
 import Entite.Inventaire;
+import Model.GestionException;
 import Model.Model;
 import Service.csvService;
 import javafx.event.ActionEvent;
@@ -35,7 +37,7 @@ public class Controller implements csvService{
 	private TextField txtQuantite;
 	
 	@FXML
-	private Label txtRetour;
+	private Label lblRetour;
 
 	@FXML
 	private Button btnValider;
@@ -43,19 +45,62 @@ public class Controller implements csvService{
 	@FXML
 	private Button btnAnnuler;
 	
-	
-
+	GestionException exception = new GestionException();
 	Model model = new Model();
 
-	public void valider(ActionEvent e) {
-
+	public void valider(ActionEvent e) throws IOException {
+		
+		int inventaire;
+		int quantite;
+		
 		try {
+			exception.controleChamp(txtIventaire.getText());
+		    } catch (NumberFormatException e1) {
+		     lblRetour.setText("La champ inventaire est vide");
+		     return;
+		    }
+		
+		try {
+			exception.controleChamp(txtArticle.getText());
+		    } catch (NumberFormatException e1) {
+		     lblRetour.setText("La champ article est vide");
+		     return;
+		    }
+		
+		try {
+			exception.controleChamp(txtLieu_stockage.getText());
+		    } catch (NumberFormatException e1) {
+		     lblRetour.setText("La champ lieu de stockage est vide");
+		     return;
+		    }
+		
+		try {
+			exception.controleChamp(txtQuantite.getText());
+		    } catch (NumberFormatException e1) {
+		     lblRetour.setText("La champ quantite est vide");
+		     return;
+		    }	
 
-			//Date
-			Date date = new Date();
+		
+		try {
+			inventaire = exception.checkNumercic(txtIventaire.getText());
+		    } catch (NumberFormatException e1) {
+		     lblRetour.setText("La champ inventaire n'est pas au bon format");
+		     return;
+		    }
+		
+		try {
+			quantite = exception.checkNumercic(txtQuantite.getText());
+		    } catch (NumberFormatException e1) {
+		     lblRetour.setText("La champ quantite n'est pas au bon format");
+		     return;
+		    }
+		
+			model.traitementData(inventaire, txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(), txtLieu_stockage.getText(), txtEmplacement.getText(), quantite);
+	}
 			
 			//Conversion
-			Inventaire inventaire = model.conversion(txtIventaire.getText(), date, txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(), txtLieu_stockage.getText(), txtEmplacement.getText(), txtQuantite.getText());
+			Inventaire inventaire = traitementData.conversion(txtIventaire.getText(), date, txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(), txtLieu_stockage.getText(), txtEmplacement.getText(), txtQuantite.getText());
 			
 			csvService.createCsvFile(txtIventaire.getText());
 			
@@ -67,23 +112,23 @@ public class Controller implements csvService{
 			
 			System.out.println(model.getInventaire().getDate());
 
-		}catch(IOException e1) {
-			
-			txtRetour.setText("Cara");
-			
-		}catch (NumberFormatException e2) {
-
-			txtRetour.setText("Vous n'avez renseigner aucun champ !");
-
-		}
-
-		//Etape 2 appel de l'objet
-
-		//Etape 3 Stockage
-	}
-
 
 	public void annuler(ActionEvent e) {
 
 	}
+	
+
+		
+			
+	
+		
+		
+		
+	
+	
 }
+
+
+
+
+
