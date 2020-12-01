@@ -1,7 +1,7 @@
 package application;
 import java.io.IOException;
 import java.util.Date;
-
+import java.util.List;
 
 import Entite.Inventaire;
 import Model.GestionException;
@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 
 public class Controller implements csvService{
 
@@ -50,6 +51,7 @@ public class Controller implements csvService{
 
 	public void valider(ActionEvent e){
 
+
 		try {
 
 			this.checkForm();
@@ -61,19 +63,22 @@ public class Controller implements csvService{
 			csvService.createCsvFile(txtInventaire.getText());
 
 			csvService.writeToCsvFile(inventaireObj, txtInventaire.getText());
+      
+      List<String[]>lecture  = csvService.readFromCsvFile(inventaireObj.getNumero_inventaire());
 
 		}catch(IOException e1){
 			
 			System.out.println(e1.getMessage());
 			
+
 		}catch(Exception e1) {
+
 			
 			this.lblRetour.setText(e1.getMessage());
 			
 		}
 
 	}
-
 
 	private void checkInteger() throws Exception{
 
@@ -84,13 +89,14 @@ public class Controller implements csvService{
 		} catch (NumberFormatException e1) {
 
 			throw new Exception ("Le champ inventaire n'est pas au bon format");
+
 			
 		}
 
 		try {
-			
+
 			exception.checkNumercic(txtQuantite.getText());
-			
+	
 		} catch (NumberFormatException e1) {
 
 			throw new Exception ("Le champ quantite n'est pas au bon format");
