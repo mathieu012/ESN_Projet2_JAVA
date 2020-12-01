@@ -97,10 +97,9 @@ public class Controller implements csvService{
 		    }
 		
 			model.traitementData(inventaire, txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(), txtLieu_stockage.getText(), txtEmplacement.getText(), quantite);
-	}
 			
 			//Conversion
-			Inventaire inventaire = traitementData.conversion(txtIventaire.getText(), date, txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(), txtLieu_stockage.getText(), txtEmplacement.getText(), txtQuantite.getText());
+			Inventaire inventaireObj = model.getInventaire();
 			
 			csvService.createCsvFile(txtIventaire.getText());
 			
@@ -108,9 +107,12 @@ public class Controller implements csvService{
 			//String line = txtArticle.getText() + ";" + txtNumero_lot.getText() + ";" + txtNumero_serie.getText() + ";" + txtLieu_stockage.getText() + ";" + txtEmplacement.getText() + ";" + txtQuantite.getText();
 			
 			
-			csvService.writeToCsvFile(inventaire, txtIventaire.getText());
+			csvService.writeToCsvFile(inventaireObj, txtIventaire.getText());
 			
 			System.out.println(model.getInventaire().getDate());
+	}
+			
+			
 
 
 	public void annuler(ActionEvent e) {
