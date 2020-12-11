@@ -48,47 +48,50 @@ public class Controller implements CsvService {
 
 	@FXML
 	private Button btnAnnuler;
-	
+
 	private boolean fileExist;
+	private boolean articleExist;
 
 	GestionException exception = new GestionException();
 	Model model = new Model();
-	
-	
-	
-	public void look(KeyEvent e) throws FileAlreadyExistsException {
+
+
+
+	public void look(KeyEvent e) throws Exception {
+		
 		
 		fileExist = CsvService.fileExist(txtInventaire.getText());
 		System.out.println(fileExist);
-		
+
 	}
-	
+
 	public void article(KeyEvent e) {
 		if(fileExist == true) {
 			//Prendre l'article interface
 			//Comparer article interface avec articles fichier
 			//Si correspondance alors return numero de lot, numero de serie, lieu de stock, emplacement, quantite
-				//afficher les valeurs sur l'interface graphique
-			//Si non lblRetour.setText("Il n'y a aucun article correspondant");
-			
-			
+			//afficher les valeurs sur l'interface graphique
+
+
+
 		}else {
 			if(fileExist == true) {
-				
+
 			}else {
-				
+
 			}
 		}
-		
-	
-		
+
+
+
 	}
-	
-	
 
-	public void valider(ActionEvent e) {
 
-		try {
+
+	public void valider(ActionEvent e) throws Exception {
+
+		//Aucun fichier n'existe alors on construit un nouveau fichier
+		if(fileExist == false) {
 
 			this.checkForm();
 
@@ -98,10 +101,25 @@ public class Controller implements CsvService {
 					txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(),
 					txtLieu_stockage.getText(), txtEmplacement.getText(), Integer.parseInt(txtQuantite.getText()));
 
-			// csvService.createCsvFile(txtInventaire.getText());
-
 			CsvService.writeToCsvFile(inventaireObj, txtInventaire.getText());
 
+		}
+		
+		//On insère un nouvel article dans un inventaire déjà existant
+		if(fileExist == true && articleExist == false) {
+			
+			this.checkForm();
+			this.checkInteger();
+			
+			
+		}
+		
+		//Modification des valeurs d'un article 
+		if(fileExist == true && articleExist == true) {
+			
+		}
+
+		/*try {
 			List<String[]> lecture = CsvService.readFromCsvFile(String.valueOf(inventaireObj.getNumero_inventaire()));
 			for (String[] strings : lecture) {
 				for (int i = 0; i < strings.length; i++) {
@@ -117,7 +135,7 @@ public class Controller implements CsvService {
 
 			this.lblRetour.setText(e1.getMessage());
 
-		}
+		}*/
 
 	}
 
