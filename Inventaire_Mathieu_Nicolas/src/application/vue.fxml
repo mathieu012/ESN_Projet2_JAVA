@@ -9,7 +9,7 @@
    <children>
       <Label layoutX="103.0" layoutY="26.0" text="INVENTAIRE" />
 
-      <TextField fx:id="txtInventaire" layoutX="62.0" layoutY="44.0" onKeyPressed="#look" />
+      <TextField fx:id="txtInventaire" layoutX="62.0" layoutY="44.0" onKeyReleased="#look" />
       <Label layoutX="109.0" layoutY="70.0" text="ARTICLE" />
       <TextField fx:id="txtArticle" layoutX="62.0" layoutY="88.0" />
       <Label layoutX="84.0" layoutY="114.0" text="NUMERO DE LOT" />

@@ -17,7 +17,7 @@ public interface CsvService {
 	public static final String separator = ";";
 	public static final String path = "src/file/";
 	public static final String fileType = ".csv";
-	public static final String fileName ="";
+	
 	
 	public static void writeToCsvFile(Inventaire inventaire, String fileName) throws FileAlreadyExistsException {
 		if (CsvService.fileExist(fileName) == false) {

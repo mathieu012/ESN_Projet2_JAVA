@@ -59,10 +59,25 @@ public class Controller implements CsvService {
 	public void look(KeyEvent e) throws FileAlreadyExistsException {
 		
 		fileExist = CsvService.fileExist(txtInventaire.getText());
-		
 		System.out.println(fileExist);
 		
 	}
+	
+	public void article(KeyEvent e) {
+		if(fileExist == true) {
+			//appel fonction read return numero de lot, numero de serie, lieu de stock, emplacement, quantite
+			//afficher les valeurs sur l'interface graphique
+		}else {
+			if(fileExist == true) {
+				lblRetour.setText("Il n'y a aucun article correspondant");
+			}
+		}
+		
+	
+		
+	}
+	
+	
 
 	public void valider(ActionEvent e) {
 
