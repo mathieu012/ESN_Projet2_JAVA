@@ -65,11 +65,18 @@ public class Controller implements CsvService {
 	
 	public void article(KeyEvent e) {
 		if(fileExist == true) {
-			//appel fonction read return numero de lot, numero de serie, lieu de stock, emplacement, quantite
-			//afficher les valeurs sur l'interface graphique
+			//Prendre l'article interface
+			//Comparer article interface avec articles fichier
+			//Si correspondance alors return numero de lot, numero de serie, lieu de stock, emplacement, quantite
+				//afficher les valeurs sur l'interface graphique
+			//Si non lblRetour.setText("Il n'y a aucun article correspondant");
+			
+			
 		}else {
 			if(fileExist == true) {
-				lblRetour.setText("Il n'y a aucun article correspondant");
+				
+			}else {
+				
 			}
 		}
 		
