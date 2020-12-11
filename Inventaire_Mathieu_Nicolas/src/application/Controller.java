@@ -1,4 +1,5 @@
 package application;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
-public class Controller implements csvService{
+public class Controller implements csvService {
 
 	@FXML
 	private TextField txtInventaire;
@@ -49,8 +50,7 @@ public class Controller implements csvService{
 	GestionException exception = new GestionException();
 	Model model = new Model();
 
-	public void valider(ActionEvent e){
-
+	public void valider(ActionEvent e) {
 
 		try {
 
@@ -58,29 +58,34 @@ public class Controller implements csvService{
 
 			this.checkInteger();
 
-			Inventaire inventaireObj = model.traitementData(Integer.parseInt(txtInventaire.getText()), txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(), txtLieu_stockage.getText(), txtEmplacement.getText(), Integer.parseInt(txtQuantite.getText()));
+			Inventaire inventaireObj = model.traitementData(Integer.parseInt(txtInventaire.getText()),
+					txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(),
+					txtLieu_stockage.getText(), txtEmplacement.getText(), Integer.parseInt(txtQuantite.getText()));
 
-			csvService.createCsvFile(txtInventaire.getText());
+			// csvService.createCsvFile(txtInventaire.getText());
 
 			csvService.writeToCsvFile(inventaireObj, txtInventaire.getText());
-      
-      List<String[]>lecture  = csvService.readFromCsvFile(inventaireObj.getNumero_inventaire());
 
-		}catch(IOException e1){
-			
+			List<String[]> lecture = csvService.readFromCsvFile(String.valueOf(inventaireObj.getNumero_inventaire()));
+			for (String[] strings : lecture) {
+				for (int i = 0; i < strings.length; i++) {
+					System.out.println(strings[i]);
+				}
+			}
+
+		} catch (IOException e1) {
+
 			System.out.println(e1.getMessage());
-			
 
-		}catch(Exception e1) {
+		} catch (Exception e1) {
 
-			
 			this.lblRetour.setText(e1.getMessage());
-			
+
 		}
 
 	}
 
-	private void checkInteger() throws Exception{
+	private void checkInteger() throws Exception {
 
 		try {
 
@@ -88,55 +93,52 @@ public class Controller implements csvService{
 
 		} catch (NumberFormatException e1) {
 
-			throw new Exception ("Le champ inventaire n'est pas au bon format");
+			throw new Exception("Le champ inventaire n'est pas au bon format");
 
-			
 		}
 
 		try {
 
 			exception.checkNumercic(txtQuantite.getText());
-	
+
 		} catch (NumberFormatException e1) {
 
-			throw new Exception ("Le champ quantite n'est pas au bon format");
-		
+			throw new Exception("Le champ quantite n'est pas au bon format");
+
 		}
 	}
 
-
-	private void checkForm() throws Exception{
+	private void checkForm() throws Exception {
 
 		try {
 			exception.controleChamp(txtInventaire.getText());
 		} catch (NumberFormatException e1) {
-			throw new Exception ("Le champ inventaire est vide");
+			throw new Exception("Le champ inventaire est vide");
 
 		}
 
 		try {
 			exception.controleChamp(txtArticle.getText());
 		} catch (NumberFormatException e1) {
-			throw new Exception ("Le champ article est vide");
+			throw new Exception("Le champ article est vide");
 
 		}
 
 		try {
 			exception.controleChamp(txtLieu_stockage.getText());
 		} catch (NumberFormatException e1) {
-			throw new Exception ("Le champ lieu de stockage est vide");
+			throw new Exception("Le champ lieu de stockage est vide");
 
 		}
 
 		try {
 			exception.controleChamp(txtQuantite.getText());
 		} catch (NumberFormatException e1) {
-			throw new Exception ("Le champ quantite est vide");
+			throw new Exception("Le champ quantite est vide");
 
 		}
 
 	}
-
 
 	public void annuler(ActionEvent e) {
 
@@ -150,18 +152,4 @@ public class Controller implements csvService{
 
 	}
 
-
-
-
-
-
-
-
-
-
 }
-
-
-
-
-
