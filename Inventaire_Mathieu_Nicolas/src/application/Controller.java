@@ -1,13 +1,15 @@
 package application;
 
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.Date;
 import java.util.List;
 
 import Entite.Inventaire;
 import Model.GestionException;
 import Model.Model;
-import Service.csvService;
+import Service.CsvService;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,7 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
-public class Controller implements csvService {
+public class Controller implements CsvService {
 
 	@FXML
 	private TextField txtInventaire;
@@ -46,9 +48,21 @@ public class Controller implements csvService {
 
 	@FXML
 	private Button btnAnnuler;
+	
+	private boolean fileExist;
 
 	GestionException exception = new GestionException();
 	Model model = new Model();
+	
+	
+	
+	public void look(KeyEvent e) throws FileAlreadyExistsException {
+		
+		fileExist = CsvService.fileExist(txtInventaire.getText());
+		
+		System.out.println(fileExist);
+		
+	}
 
 	public void valider(ActionEvent e) {
 
@@ -64,9 +78,9 @@ public class Controller implements csvService {
 
 			// csvService.createCsvFile(txtInventaire.getText());
 
-			csvService.writeToCsvFile(inventaireObj, txtInventaire.getText());
+			CsvService.writeToCsvFile(inventaireObj, txtInventaire.getText());
 
-			List<String[]> lecture = csvService.readFromCsvFile(String.valueOf(inventaireObj.getNumero_inventaire()));
+			List<String[]> lecture = CsvService.readFromCsvFile(String.valueOf(inventaireObj.getNumero_inventaire()));
 			for (String[] strings : lecture) {
 				for (int i = 0; i < strings.length; i++) {
 					System.out.println(strings[i]);

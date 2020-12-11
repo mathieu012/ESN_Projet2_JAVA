@@ -12,7 +12,7 @@ import java.util.List;
 
 import Entite.Inventaire;
 
-public interface csvService {
+public interface CsvService {
 	
 	public static final String separator = ";";
 	public static final String path = "src/file/";
@@ -20,13 +20,13 @@ public interface csvService {
 	public static final String fileName ="";
 	
 	public static void writeToCsvFile(Inventaire inventaire, String fileName) throws FileAlreadyExistsException {
-		if (csvService.fileExist(fileName) == false) {
-			csvService.createCsvFile(fileName);
+		if (CsvService.fileExist(fileName) == false) {
+			CsvService.createCsvFile(fileName);
 		}
 		
 		try (FileWriter writer = new FileWriter(path + fileName + fileType)){
 			
-			String line = inventaire.getArticle() + csvService.separator + inventaire.getNumeroLot() + csvService.separator + inventaire.getNumeroSerie() + csvService.separator + inventaire.getLieuStockage() +  csvService.separator  + inventaire.getEmplacement() +  csvService.separator  + inventaire.getQuantite();
+			String line = inventaire.getArticle() + CsvService.separator + inventaire.getNumeroLot() + CsvService.separator + inventaire.getNumeroSerie() + CsvService.separator + inventaire.getLieuStockage() +  CsvService.separator  + inventaire.getEmplacement() +  CsvService.separator  + inventaire.getQuantite();
 	        writer.append(line);
 	        writer.flush();
 	    } catch (IOException e) {
@@ -41,7 +41,7 @@ public interface csvService {
 	        List<String[]> list = new ArrayList<>();
 	        String line = "";
 	        while((line = reader.readLine()) != null){
-	            String[] array = line.split(csvService.separator);
+	            String[] array = line.split(CsvService.separator);
 	            list.add(array);
 	        }
 	        return list;
