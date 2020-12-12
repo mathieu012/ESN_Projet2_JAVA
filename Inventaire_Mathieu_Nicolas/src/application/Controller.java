@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 
 public class Controller implements CsvService {
 
@@ -62,18 +63,29 @@ public class Controller implements CsvService {
 		
 		
 		fileExist = CsvService.fileExist(txtInventaire.getText());
+		lblRetour.setTextAlignment(TextAlignment.CENTER);
+		if (fileExist == true) {
+			lblRetour.setText("inventaire existant");
+			lblRetour.setTextFill(Color.web("#A8EB12"));
+		} else {
+			lblRetour.setText("Aucun inventaire conrrespondant");
+			lblRetour.setTextFill(Color.web("red"));
+			
+		}
+		
+		
 		System.out.println(fileExist);
 
 	}
 
 	public void article(KeyEvent e) {
-		if(fileExist == true) {
+		if(fileExist == true) {//verification que l'article existe
 			//Prendre l'article interface
 			//lecture du fichier
 			List<String[]> lecture = CsvService.readFromCsvFile(txtInventaire.getText());
 			for (String[] strings : lecture) {System.out.println(strings[0] == txtArticle.getText());
 				
-				//Comparer article interface avec articles fichier
+				//Comparer article formulaire avec articles fichier
 				if (
 						   strings[0].equals(txtArticle.getText())
 						&& strings[1].equals(txtNumero_lot.getText())
@@ -81,6 +93,7 @@ public class Controller implements CsvService {
 						&& strings[3].equals(txtLieu_stockage.getText())
 						&& strings[4].equals(txtEmplacement.getText()))
 				{
+				//si l'article est trouvï¿½
 					
 					
 					//afficher les valeurs sur l'interface graphique
@@ -91,14 +104,20 @@ public class Controller implements CsvService {
 					txtEmplacement.setText(strings[4]);
 					txtQuantite.setText(strings[5]);
 					
-					lblRetour.setText("Article trouvé");
-					lblRetour.setTextFill(Color.web("green"));
-					//Sort de la boucle une fois l'article identifié
+					articleExist = true;
+					
+					lblRetour.setText("Article existant");
+					lblRetour.setTextFill(Color.web("#A8EB12"));
+					//Sort de la boucle une fois l'article identifiÃ©
 					break;
 				} else {
+				//sil'article n'est pas trouvÃ©
+					articleExist = false;
+					
 					lblRetour.setText("Aucun article correspondant");
 					lblRetour.setTextFill(Color.web("red"));
 				}
+				lblRetour.setTextAlignment(TextAlignment.CENTER);
 			}
 			
 
@@ -135,7 +154,7 @@ public class Controller implements CsvService {
 
 		}
 		
-		//On insère un nouvel article dans un inventaire déjà existant
+		//On insï¿½re un nouvel article dans un inventaire dï¿½jï¿½ existant
 		if(fileExist == true && articleExist == false) {
 			
 			this.checkForm();
