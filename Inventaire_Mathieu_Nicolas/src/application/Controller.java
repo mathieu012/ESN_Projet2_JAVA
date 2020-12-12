@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 
 public class Controller implements CsvService {
 
@@ -68,9 +69,38 @@ public class Controller implements CsvService {
 	public void article(KeyEvent e) {
 		if(fileExist == true) {
 			//Prendre l'article interface
-			//Comparer article interface avec articles fichier
-			//Si correspondance alors return numero de lot, numero de serie, lieu de stock, emplacement, quantite
-			//afficher les valeurs sur l'interface graphique
+			//lecture du fichier
+			List<String[]> lecture = CsvService.readFromCsvFile(txtInventaire.getText());
+			for (String[] strings : lecture) {System.out.println(strings[0] == txtArticle.getText());
+				
+				//Comparer article interface avec articles fichier
+				if (
+						   strings[0].equals(txtArticle.getText())
+						&& strings[1].equals(txtNumero_lot.getText())
+						&& strings[2].equals(txtNumero_serie.getText())
+						&& strings[3].equals(txtLieu_stockage.getText())
+						&& strings[4].equals(txtEmplacement.getText()))
+				{
+					
+					
+					//afficher les valeurs sur l'interface graphique
+					txtArticle.setText(strings[0]);
+					txtNumero_lot.setText(strings[1]);
+					txtNumero_serie.setText(strings[2]);
+					txtLieu_stockage.setText(strings[3]);
+					txtEmplacement.setText(strings[4]);
+					txtQuantite.setText(strings[5]);
+					
+					lblRetour.setText("Article trouvé");
+					lblRetour.setTextFill(Color.web("green"));
+					//Sort de la boucle une fois l'article identifié
+					break;
+				} else {
+					lblRetour.setText("Aucun article correspondant");
+					lblRetour.setTextFill(Color.web("red"));
+				}
+			}
+			
 
 
 
@@ -110,6 +140,12 @@ public class Controller implements CsvService {
 			
 			this.checkForm();
 			this.checkInteger();
+			
+			Inventaire inventaireObj = model.traitementData(Integer.parseInt(txtInventaire.getText()),
+					txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(),
+					txtLieu_stockage.getText(), txtEmplacement.getText(), Integer.parseInt(txtQuantite.getText()));
+
+			CsvService.writeToCsvFile(inventaireObj, txtInventaire.getText());
 			
 			
 		}

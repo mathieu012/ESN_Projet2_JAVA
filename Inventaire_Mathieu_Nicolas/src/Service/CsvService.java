@@ -1,10 +1,12 @@
 package Service;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystemException;
 import java.util.ArrayList;
@@ -24,15 +26,16 @@ public interface CsvService {
 			CsvService.createCsvFile(fileName);
 		}
 		
-		try (FileWriter writer = new FileWriter(path + fileName + fileType)){
-			
-			String line = inventaire.getArticle() + CsvService.separator + inventaire.getNumeroLot() + CsvService.separator + inventaire.getNumeroSerie() + CsvService.separator + inventaire.getLieuStockage() +  CsvService.separator  + inventaire.getEmplacement() +  CsvService.separator  + inventaire.getQuantite();
-	        writer.append(line);
-	        writer.flush();
-	    } catch (IOException e) {
-	    	System.out.println("Impossible d'ecrire dans le fichier");
-	        e.printStackTrace();
-	    }
+		String line = inventaire.getArticle() + CsvService.separator + inventaire.getNumeroLot() + CsvService.separator + inventaire.getNumeroSerie() + CsvService.separator + inventaire.getLieuStockage() +  CsvService.separator  + inventaire.getEmplacement() +  CsvService.separator  + inventaire.getQuantite();
+		
+		try(FileWriter fw = new FileWriter(path + fileName + fileType, true);
+			    BufferedWriter bw = new BufferedWriter(fw);
+			    PrintWriter out = new PrintWriter(bw))
+			{
+			    out.println(line);
+			} catch (IOException e) {
+			    //exception handling left as an exercise for the reader
+			}
 	}
 
 	
