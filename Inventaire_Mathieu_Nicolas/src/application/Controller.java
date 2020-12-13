@@ -143,7 +143,7 @@ public class Controller implements CsvService {
 				
 				this.clear();
 				lblRetour.setText("L'inventaire N° " + txtInventaire.getText() + " a été creer");
-
+				//COULEUR
 			}
 
 			//On insï¿½re un nouvel article dans un inventaire dï¿½jï¿½ existant
