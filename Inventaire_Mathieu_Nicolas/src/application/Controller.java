@@ -60,137 +60,136 @@ public class Controller implements CsvService {
 
 
 	public void look(KeyEvent e) throws Exception {
-		
-		
+
+
 		fileExist = CsvService.fileExist(txtInventaire.getText());
-		lblRetour.setTextAlignment(TextAlignment.CENTER);
+		//lblRetour.setTextAlignment(TextAlignment.CENTER);
 		if (fileExist == true) {
 			lblRetour.setText("inventaire existant");
 			lblRetour.setTextFill(Color.web("#A8EB12"));
 		} else {
 			lblRetour.setText("Aucun inventaire conrrespondant");
 			lblRetour.setTextFill(Color.web("red"));
-			
+
 		}
-		
-		
+
+
 		System.out.println(fileExist);
 
 	}
 
 	public void article(KeyEvent e) {
+
 		if(fileExist == true) {//verification que l'article existe
 			//Prendre l'article interface
 			//lecture du fichier
 			List<String[]> lecture = CsvService.readFromCsvFile(txtInventaire.getText());
 			for (String[] strings : lecture) {System.out.println(strings[0] == txtArticle.getText());
-				
-				//Comparer article formulaire avec articles fichier
-				if (
-						   strings[0].equals(txtArticle.getText())
-						&& strings[1].equals(txtNumero_lot.getText())
-						&& strings[2].equals(txtNumero_serie.getText())
-						&& strings[3].equals(txtLieu_stockage.getText())
-						&& strings[4].equals(txtEmplacement.getText()))
-				{
+
+			//Comparer article formulaire avec articles fichier
+			if (strings[0].equals(txtArticle.getText())
+					/*&& strings[1].equals(txtNumero_lot.getText())
+						//&& strings[2].equals(txtNumero_serie.getText())
+						//&& strings[3].equals(txtLieu_stockage.getText())
+						//&& strings[4].equals(txtEmplacement.getText())*/)
+			{
 				//si l'article est trouvï¿½
-					
-					
-					//afficher les valeurs sur l'interface graphique
-					txtArticle.setText(strings[0]);
-					txtNumero_lot.setText(strings[1]);
-					txtNumero_serie.setText(strings[2]);
-					txtLieu_stockage.setText(strings[3]);
-					txtEmplacement.setText(strings[4]);
-					txtQuantite.setText(strings[5]);
-					
-					articleExist = true;
-					
-					lblRetour.setText("Article existant");
-					lblRetour.setTextFill(Color.web("#A8EB12"));
-					//Sort de la boucle une fois l'article identifiÃ©
-					break;
-				} else {
+
+
+				//afficher les valeurs sur l'interface graphique
+				txtArticle.setText(strings[0]);
+				txtNumero_lot.setText(strings[1]);
+				txtNumero_serie.setText(strings[2]);
+				txtLieu_stockage.setText(strings[3]);
+				txtEmplacement.setText(strings[4]);
+				txtQuantite.setText(strings[5]);
+
+				articleExist = true;
+
+				lblRetour.setText("Article existant");
+				lblRetour.setTextFill(Color.web("#A8EB12"));
+				//Sort de la boucle une fois l'article identifiÃ©
+				break;
+			} else {
 				//sil'article n'est pas trouvÃ©
-					articleExist = false;
-					
-					lblRetour.setText("Aucun article correspondant");
-					lblRetour.setTextFill(Color.web("red"));
-				}
-				lblRetour.setTextAlignment(TextAlignment.CENTER);
-			}
-			
+				articleExist = false;
 
-
-
-		}else {
-			if(fileExist == true) {
-
-			}else {
+				lblRetour.setText("Aucun article n'est présent dans cette inventaire");
+				lblRetour.setTextFill(Color.web("red"));
 
 			}
+			lblRetour.setTextAlignment(TextAlignment.CENTER);
+			}
+
 		}
-
-
 
 	}
 
 
-
-	public void valider(ActionEvent e) throws Exception {
-
-		//Aucun fichier n'existe alors on construit un nouveau fichier
-		if(fileExist == false) {
-
-			this.checkForm();
-
-			this.checkInteger();
-
-			Inventaire inventaireObj = model.traitementData(Integer.parseInt(txtInventaire.getText()),
-					txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(),
-					txtLieu_stockage.getText(), txtEmplacement.getText(), Integer.parseInt(txtQuantite.getText()));
-
-			CsvService.writeToCsvFile(inventaireObj, txtInventaire.getText());
-
-		}
+	public void valider(ActionEvent e){
 		
-		//On insï¿½re un nouvel article dans un inventaire dï¿½jï¿½ existant
-		if(fileExist == true && articleExist == false) {
-			
-			this.checkForm();
-			this.checkInteger();
-			
-			Inventaire inventaireObj = model.traitementData(Integer.parseInt(txtInventaire.getText()),
-					txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(),
-					txtLieu_stockage.getText(), txtEmplacement.getText(), Integer.parseInt(txtQuantite.getText()));
+		try {
+			//Aucun fichier n'existe alors on construit un nouveau fichier
+			if(fileExist == false) {
 
-			CsvService.writeToCsvFile(inventaireObj, txtInventaire.getText());
-			
-			
-		}
-		
-		//Modification des valeurs d'un article 
-		if(fileExist == true && articleExist == true) {
-			
-		}
+				this.checkForm();
+				this.checkInteger();
 
-		/*try {
-			List<String[]> lecture = CsvService.readFromCsvFile(String.valueOf(inventaireObj.getNumero_inventaire()));
-			for (String[] strings : lecture) {
-				for (int i = 0; i < strings.length; i++) {
-					System.out.println(strings[i]);
-				}
+				Inventaire inventaireObj = model.traitementData(Integer.parseInt(txtInventaire.getText()),
+						txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(),
+						txtLieu_stockage.getText(), txtEmplacement.getText(), Integer.parseInt(txtQuantite.getText()));
+
+				CsvService.writeToCsvFile(inventaireObj, txtInventaire.getText());
+				
+				this.clear();
+				lblRetour.setText("L'inventaire N° " + txtInventaire.getText() + " a été creer");
+
 			}
 
-		} catch (IOException e1) {
+			//On insï¿½re un nouvel article dans un inventaire dï¿½jï¿½ existant
+			if(fileExist == true && articleExist == false) {
 
-			System.out.println(e1.getMessage());
+				this.checkForm();
+				this.checkInteger();
 
-		} catch (Exception e1) {
+				Inventaire inventaireObj = model.traitementData(Integer.parseInt(txtInventaire.getText()),
+						txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(),
+						txtLieu_stockage.getText(), txtEmplacement.getText(), Integer.parseInt(txtQuantite.getText()));
 
-			this.lblRetour.setText(e1.getMessage());
+				CsvService.writeToCsvFile(inventaireObj, txtInventaire.getText());
 
-		}*/
+				this.clear();
+			}
+
+			//Modification des valeurs d'un article 
+			if(fileExist == true && articleExist == true) {
+				
+				this.checkForm();
+				this.checkInteger();
+
+				List<String[]> lecture = CsvService.readFromCsvFile(txtInventaire.getText());
+				CsvService.supp(txtInventaire.getText());
+				CsvService.createCsvFile(txtInventaire.getText());
+				for (String[] strings : lecture) {
+
+
+					if (strings[0].equals(txtArticle.getText())){
+						strings[1] = txtNumero_lot.getText();
+						strings[2] = txtNumero_serie.getText();
+						strings[3] = txtLieu_stockage.getText();
+						strings[4] = txtEmplacement.getText();
+						strings[5] = txtQuantite.getText();	
+					}
+					CsvService.modifToCsvFile(strings, txtInventaire.getText());
+				}
+				this.clear();
+			}
+			
+		}catch(Exception e1) {
+			lblRetour.setText(e1.getMessage());
+			lblRetour.setTextFill(Color.web("red"));
+		}
+		
 
 	}
 
@@ -257,7 +256,20 @@ public class Controller implements CsvService {
 		txtNumero_serie.setText("");
 		txtLieu_stockage.setText("");
 		txtEmplacement.setText("");
-		txtQuantite.setText("");
+		txtQuantite.setText("0");
+
+	}
+	
+	public void clear() {
+
+		txtInventaire.setText("");
+		txtArticle.setText("");
+		txtNumero_lot.setText("");
+		txtNumero_serie.setText("");
+		txtLieu_stockage.setText("");
+		txtEmplacement.setText("");
+		txtQuantite.setText("0");
+		lblRetour.setText("");
 
 	}
 
