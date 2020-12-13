@@ -271,6 +271,7 @@ public class Controller implements CsvService {
 		txtLieu_stockage.setText("");
 		txtEmplacement.setText("");
 		txtQuantite.setText("0");
+		lblRetour.setText("");
 
 	}
 
