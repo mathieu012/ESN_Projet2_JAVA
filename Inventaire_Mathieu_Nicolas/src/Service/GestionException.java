@@ -9,7 +9,7 @@ public class GestionException {
 
 		if(champ.equals("")) {
 
-			throw new NumberFormatException("Le champ n'est pas renseigné"); 
+			throw new NumberFormatException("Le champ n'est pas renseignÃ©"); 
 		}
 	}
 
@@ -24,7 +24,7 @@ public class GestionException {
 		}
 	}
 
-	//check si le lieu de stockage est référencé dans le fichier csv
+	//check si le lieu de stockage est rÃ©fÃ©rence dans le fichier csv
 	public void checkStockage(String lieuStockage) throws Exception {
 		int status = 0;
 		List<String[]> lecture = CsvService.readFromCsvFile("lieuStockage");
@@ -37,7 +37,7 @@ public class GestionException {
 		}
 
 		if(status == 0) {
-			throw new Exception("Le lieu de stockage n'est pas référencé");
+			throw new Exception("Le lieu de stockage n'est pas rÃ©fÃ©rencÃ©");
 		}
 	}
 
@@ -53,7 +53,7 @@ public class GestionException {
 		}
 
 		if(status == 0) {
-			throw new Exception("L'article n'est pas référencé");
+			throw new Exception("L'article n'est pas rÃ©fÃ©rencÃ©");
 		}
 	}
 }

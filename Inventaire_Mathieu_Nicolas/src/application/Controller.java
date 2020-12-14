@@ -74,7 +74,7 @@ public class Controller implements CsvService {
 
 	}
 
-	//Remonte les articles si présent dans l'inventaire
+	//Remonte les articles si prÃ©sent dans l'inventaire
 	public void article(KeyEvent e) {
 
 		if (fileExist == true) {// verification que l'article existe
@@ -87,7 +87,7 @@ public class Controller implements CsvService {
 
 				// Comparer article formulaire avec articles fichier
 				if (strings[0].equals(txtArticle.getText())) {
-					// si l'article est trouvï¿½
+					// si l'article est trouvÃ©
 
 					// afficher les valeurs sur l'interface graphique
 					txtArticle.setText(strings[0]);
@@ -116,12 +116,12 @@ public class Controller implements CsvService {
 	}
 
 	
-	//Créer, ajoute et modifie les fichier CSV
+	//Crï¿½er, ajoute et modifie les fichier CSV
 	public void valider(ActionEvent e) {
 
 		if (Integer.parseInt(txtQuantite.getText()) == 0) {
 
-			lblRetour.setText("La quantité doit etre > 0");
+			lblRetour.setText("La quantitÃ© doit etre > 0");
 			lblRetour.setTextFill(Color.web(this.colorAvertissement));
 
 		} else {

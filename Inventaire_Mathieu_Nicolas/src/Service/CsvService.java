@@ -66,7 +66,7 @@ public interface CsvService {
 		}else{
 			System.out.println("File not found!");
 			return false;
-			//throw new FileAlreadyExistsException("l'inventaire N� " + fileName + " n'a pas �t� trouve");
+			//throw new FileAlreadyExistsException("l'inventaire N° " + fileName + " n'a pas été trouvé");
 		}
 
 
@@ -79,8 +79,8 @@ public interface CsvService {
 			if (fichier.createNewFile()) {
 
 			}else{
-				System.out.println("Erreur, Impossible de cr�er ce fichier");
-				throw new FileSystemException("Le fichier N� " + fileName + "ne peut pas cr�er le fichier");
+				System.out.println("Erreur, Impossible de créer ce fichier");
+				throw new FileSystemException("Le fichier N° " + fileName + "ne peut pas créer le fichier");
 			}
 		
 	}
@@ -108,7 +108,7 @@ public interface CsvService {
 
 		if(myFile.delete()) 
 		{ 
-			System.out.println("Fichier supprim� avec succ�s"); 
+			System.out.println("Fichier supprimé avec succés"); 
 		} 
 		else
 		{ 
