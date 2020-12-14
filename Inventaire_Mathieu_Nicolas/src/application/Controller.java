@@ -56,6 +56,7 @@ public class Controller implements CsvService {
 	GestionException exception = new GestionException();
 	Model model = new Model();
 
+	//Remonte si l'inventaire existe ou non
 	public void look(KeyEvent e) throws Exception {
 
 		fileExist = CsvService.fileExist(txtInventaire.getText());
@@ -69,10 +70,11 @@ public class Controller implements CsvService {
 
 		}
 
-		System.out.println(fileExist);
+
 
 	}
 
+	//Remonte les articles si présent dans l'inventaire
 	public void article(KeyEvent e) {
 
 		if (fileExist == true) {// verification que l'article existe
@@ -84,13 +86,7 @@ public class Controller implements CsvService {
 				System.out.println(strings[0] == txtArticle.getText());
 
 				// Comparer article formulaire avec articles fichier
-				if (strings[0].equals(txtArticle.getText())
-				/*
-				 * && strings[1].equals(txtNumero_lot.getText()) //&&
-				 * strings[2].equals(txtNumero_serie.getText()) //&&
-				 * strings[3].equals(txtLieu_stockage.getText()) //&&
-				 * strings[4].equals(txtEmplacement.getText())
-				 */) {
+				if (strings[0].equals(txtArticle.getText())) {
 					// si l'article est trouvï¿½
 
 					// afficher les valeurs sur l'interface graphique
@@ -119,20 +115,25 @@ public class Controller implements CsvService {
 		}
 	}
 
+	
+	//Créer, ajoute et modifie les fichier CSV
 	public void valider(ActionEvent e) {
+
 		if (Integer.parseInt(txtQuantite.getText()) == 0) {
-			
-			lblRetour.setText("La quantitÃ© doit etre > 0");
+
+			lblRetour.setText("La quantité doit etre > 0");
 			lblRetour.setTextFill(Color.web(this.colorAvertissement));
-			
+
 		} else {
 			try {
-
+				
 				// Aucun fichier n'existe alors on construit un nouveau fichier
 				if (fileExist == false) {
 
 					this.checkForm();
 					this.checkInteger();
+					this.checkStockage(txtLieu_stockage.getText());
+					this.checkArticles(txtArticle.getText());
 
 					Inventaire inventaireObj = model.traitementData(Integer.parseInt(txtInventaire.getText()),
 							txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(),
@@ -142,7 +143,7 @@ public class Controller implements CsvService {
 					CsvService.writeToCsvFile(inventaireObj, txtInventaire.getText());
 
 					lblRetour.setText("Un nouvel inventaire NÂ° " + txtInventaire.getText()
-							+ " a Ã©tÃ© crÃ©e avec l'article " + txtArticle.getText());
+					+ " a Ã©tÃ© crÃ©e avec l'article " + txtArticle.getText());
 					lblRetour.setTextFill(Color.web(this.colorOk));
 					this.clear();
 
@@ -153,6 +154,8 @@ public class Controller implements CsvService {
 
 					this.checkForm();
 					this.checkInteger();
+					this.checkStockage(txtLieu_stockage.getText());
+					this.checkArticles(txtArticle.getText());
 
 					Inventaire inventaireObj = model.traitementData(Integer.parseInt(txtInventaire.getText()),
 							txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(),
@@ -172,6 +175,8 @@ public class Controller implements CsvService {
 
 					this.checkForm();
 					this.checkInteger();
+					this.checkStockage(txtLieu_stockage.getText());
+					this.checkArticles(txtArticle.getText());
 
 					List<String[]> lecture = CsvService.readFromCsvFile(txtInventaire.getText());
 					CsvService.supp(txtInventaire.getText());
@@ -202,6 +207,7 @@ public class Controller implements CsvService {
 
 	}
 
+	//Check si les champs sont au bon format
 	private void checkInteger() throws Exception {
 
 		try {
@@ -225,6 +231,40 @@ public class Controller implements CsvService {
 		}
 	}
 
+	//check si le lieu de stockage est référencé dans le fichier csv
+	private void checkStockage(String lieuStockage) throws Exception {
+		int status = 0;
+		List<String[]> lecture = CsvService.readFromCsvFile("lieuStockage");
+		for (String[] strings : lecture) {
+
+			if(strings[0].equals(lieuStockage)) {
+				status = 1;
+			}
+
+		}
+
+		if(status == 0) {
+			throw new Exception("Le lieu de stockage n'est pas référencé");
+		}
+	}
+	
+	private void checkArticles(String articles) throws Exception {
+		int status = 0;
+		List<String[]> lecture = CsvService.readFromCsvFile("articles");
+		for (String[] strings : lecture) {
+
+			if(strings[0].equals(articles)) {
+				status = 1;
+			}
+
+		}
+
+		if(status == 0) {
+			throw new Exception("L'article n'est pas référencé");
+		}
+	}
+
+	//Check les champs obligatoire
 	private void checkForm() throws Exception {
 
 		try {
@@ -257,6 +297,7 @@ public class Controller implements CsvService {
 
 	}
 
+	//Clear les champs en fonction du boutton valider
 	public void annuler(ActionEvent e) {
 
 		txtInventaire.setText("");
@@ -270,6 +311,7 @@ public class Controller implements CsvService {
 
 	}
 
+	//Clear les champs
 	public void clear() {
 
 		txtInventaire.setText("");
