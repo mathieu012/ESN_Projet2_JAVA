@@ -3,9 +3,9 @@ package application;
 import java.util.List;
 
 import Entite.Inventaire;
-import Model.GestionException;
 import Model.Model;
 import Service.CsvService;
+import Service.GestionException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -132,8 +132,8 @@ public class Controller implements CsvService {
 
 					this.checkForm();
 					this.checkInteger();
-					this.checkStockage(txtLieu_stockage.getText());
-					this.checkArticles(txtArticle.getText());
+					exception.checkStockage(txtLieu_stockage.getText());
+					exception.checkArticles(txtArticle.getText());
 
 					Inventaire inventaireObj = model.traitementData(Integer.parseInt(txtInventaire.getText()),
 							txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(),
@@ -154,8 +154,8 @@ public class Controller implements CsvService {
 
 					this.checkForm();
 					this.checkInteger();
-					this.checkStockage(txtLieu_stockage.getText());
-					this.checkArticles(txtArticle.getText());
+					exception.checkStockage(txtLieu_stockage.getText());
+					exception.checkArticles(txtArticle.getText());
 
 					Inventaire inventaireObj = model.traitementData(Integer.parseInt(txtInventaire.getText()),
 							txtArticle.getText(), txtNumero_lot.getText(), txtNumero_serie.getText(),
@@ -175,8 +175,8 @@ public class Controller implements CsvService {
 
 					this.checkForm();
 					this.checkInteger();
-					this.checkStockage(txtLieu_stockage.getText());
-					this.checkArticles(txtArticle.getText());
+					exception.checkStockage(txtLieu_stockage.getText());
+					exception.checkArticles(txtArticle.getText());
 
 					List<String[]> lecture = CsvService.readFromCsvFile(txtInventaire.getText());
 					CsvService.supp(txtInventaire.getText());
@@ -206,6 +206,20 @@ public class Controller implements CsvService {
 		}
 
 	}
+	
+	//Clear les champs en fonction du boutton valider
+	public void annuler(ActionEvent e) {
+
+			txtInventaire.setText("");
+			txtArticle.setText("");
+			txtNumero_lot.setText("");
+			txtNumero_serie.setText("");
+			txtLieu_stockage.setText("");
+			txtEmplacement.setText("");
+			txtQuantite.setText("0");
+			lblRetour.setText("");
+
+		}
 
 	//Check si les champs sont au bon format
 	private void checkInteger() throws Exception {
@@ -231,38 +245,6 @@ public class Controller implements CsvService {
 		}
 	}
 
-	//check si le lieu de stockage est référencé dans le fichier csv
-	private void checkStockage(String lieuStockage) throws Exception {
-		int status = 0;
-		List<String[]> lecture = CsvService.readFromCsvFile("lieuStockage");
-		for (String[] strings : lecture) {
-
-			if(strings[0].equals(lieuStockage)) {
-				status = 1;
-			}
-
-		}
-
-		if(status == 0) {
-			throw new Exception("Le lieu de stockage n'est pas référencé");
-		}
-	}
-	
-	private void checkArticles(String articles) throws Exception {
-		int status = 0;
-		List<String[]> lecture = CsvService.readFromCsvFile("articles");
-		for (String[] strings : lecture) {
-
-			if(strings[0].equals(articles)) {
-				status = 1;
-			}
-
-		}
-
-		if(status == 0) {
-			throw new Exception("L'article n'est pas référencé");
-		}
-	}
 
 	//Check les champs obligatoire
 	private void checkForm() throws Exception {
@@ -297,19 +279,6 @@ public class Controller implements CsvService {
 
 	}
 
-	//Clear les champs en fonction du boutton valider
-	public void annuler(ActionEvent e) {
-
-		txtInventaire.setText("");
-		txtArticle.setText("");
-		txtNumero_lot.setText("");
-		txtNumero_serie.setText("");
-		txtLieu_stockage.setText("");
-		txtEmplacement.setText("");
-		txtQuantite.setText("0");
-		lblRetour.setText("");
-
-	}
 
 	//Clear les champs
 	public void clear() {
