@@ -29,11 +29,15 @@ public interface CsvService {
 
 			String line = inventaire.getArticle() + CsvService.separator + inventaire.getNumeroLot() + CsvService.separator + inventaire.getNumeroSerie() + CsvService.separator + inventaire.getLieuStockage() +  CsvService.separator  + inventaire.getEmplacement() +  CsvService.separator  + inventaire.getQuantite();
 
-			
-			FileWriter fw = new FileWriter(path + fileName + fileType, true);
-			BufferedWriter bw = new BufferedWriter(fw);
-			PrintWriter out = new PrintWriter(bw);
-			out.println(line);
+			try(FileWriter fw = new FileWriter(path + fileName + fileType, true);
+					BufferedWriter bw = new BufferedWriter(fw);
+					PrintWriter out = new PrintWriter(bw))
+			{
+				out.println(line);
+
+			} catch (IOException e) {
+
+			}
 
 	}
 
@@ -62,7 +66,7 @@ public interface CsvService {
 		}else{
 			System.out.println("File not found!");
 			return false;
-			//throw new FileAlreadyExistsException("l'inventaire N° " + fileName + " n'a pas été trouve");
+			//throw new FileAlreadyExistsException("l'inventaire Nï¿½ " + fileName + " n'a pas ï¿½tï¿½ trouve");
 		}
 
 
@@ -75,8 +79,8 @@ public interface CsvService {
 			if (fichier.createNewFile()) {
 
 			}else{
-				System.out.println("Erreur, Impossible de créer ce fichier");
-				throw new FileSystemException("Le fichier N° " + fileName + "ne peut pas créer le fichier");
+				System.out.println("Erreur, Impossible de crï¿½er ce fichier");
+				throw new FileSystemException("Le fichier Nï¿½ " + fileName + "ne peut pas crï¿½er le fichier");
 			}
 		
 	}
@@ -104,7 +108,7 @@ public interface CsvService {
 
 		if(myFile.delete()) 
 		{ 
-			System.out.println("Fichier supprimé avec succès"); 
+			System.out.println("Fichier supprimï¿½ avec succï¿½s"); 
 		} 
 		else
 		{ 
